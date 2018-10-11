@@ -48,6 +48,10 @@ public interface AppearanceInterface {
 
     boolean isShowDaysOfWeekTitle();
 
+    int getDayBackgroundColor();
+
+    int getDisabledDayBackgroundColor();
+
     void setCalendarBackgroundColor(int calendarBackgroundColor);
 
     void setMonthTextColor(int monthTextColor);
@@ -93,4 +97,8 @@ public interface AppearanceInterface {
     void setShowDaysOfWeek(boolean showDaysOfWeek);
 
     void setShowDaysOfWeekTitle(boolean showDaysOfWeekTitle);
+
+    void setDayBackgroundColor(int dayBackgroundColor);
+
+    void setDisabledDayBackgroundColor(int disabledDayBackgroundColor);
 }

@@ -176,6 +176,7 @@ public class DayHolder extends BaseDayHolder {
         }
         day.setSelectionCircleDrawed(false);
         ctvDay.setTextColor(textColor);
+        ctvDay.setBackgroundColor(day.isDisabled() ? calendarView.getDisabledDayBackgroundColor() : calendarView.getDayBackgroundColor());
         ctvDay.clearView();
     }
 

@@ -76,6 +76,11 @@ public class AppearanceModel implements AppearanceInterface {
     //Defines if we need to display week day title for whole calendar
     private boolean showDaysOfWeekTitle;
 
+    //Background color of a day
+    private int dayBackgroundColor;
+
+    //Background color of disabled day
+    private int disabledDayBackgroundColor;
 
     @Override
     public int getCalendarBackgroundColor() {
@@ -193,6 +198,16 @@ public class AppearanceModel implements AppearanceInterface {
     }
 
     @Override
+    public int getDayBackgroundColor() {
+        return dayBackgroundColor;
+    }
+
+    @Override
+    public int getDisabledDayBackgroundColor() {
+        return disabledDayBackgroundColor;
+    }
+
+    @Override
     public void setCalendarBackgroundColor(int calendarBackgroundColor) {
         this.calendarBackgroundColor = calendarBackgroundColor;
     }
@@ -305,5 +320,15 @@ public class AppearanceModel implements AppearanceInterface {
     @Override
     public void setShowDaysOfWeekTitle(boolean showDaysOfWeekTitle) {
         this.showDaysOfWeekTitle = showDaysOfWeekTitle;
+    }
+
+    @Override
+    public void setDayBackgroundColor(int dayBackgroundColor) {
+        this.dayBackgroundColor = dayBackgroundColor;
+    }
+
+    @Override
+    public void setDisabledDayBackgroundColor(int disabledDayBackgroundColor) {
+        this.disabledDayBackgroundColor = disabledDayBackgroundColor;
     }
 }

@@ -168,6 +168,16 @@ public class SettingsManager implements AppearanceInterface, DateInterface, Cale
     }
 
     @Override
+    public int getDayBackgroundColor() {
+        return appearanceModel.getDayBackgroundColor();
+    }
+
+    @Override
+    public int getDisabledDayBackgroundColor() {
+        return appearanceModel.getDisabledDayBackgroundColor();
+    }
+
+    @Override
     public void setCalendarBackgroundColor(int calendarBackgroundColor) {
         appearanceModel.setCalendarBackgroundColor(calendarBackgroundColor);
     }
@@ -352,4 +362,15 @@ public class SettingsManager implements AppearanceInterface, DateInterface, Cale
     public void setMaxDate(Calendar maxDate) {
         calendarListsModel.setMaxDate(maxDate);
     }
+
+    @Override
+    public void setDayBackgroundColor(int dayBackgroundColor) {
+        appearanceModel.setDayBackgroundColor(dayBackgroundColor);
+    }
+
+    @Override
+    public void setDisabledDayBackgroundColor(int disabledDayBackgroundColor) {
+        appearanceModel.setDisabledDayBackgroundColor(disabledDayBackgroundColor);
+    }
+
 }

@@ -179,6 +179,8 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
         int selectionBarMonthTextColor = typedArray.getColor(R.styleable.CalendarView_selectionBarMonthTextColor, ContextCompat.getColor(getContext(), R.color.default_selection_bar_month_title_text_color));
         int previousMonthIconRes = typedArray.getResourceId(R.styleable.CalendarView_previousMonthIconRes, R.drawable.ic_chevron_left_gray);
         int nextMonthIconRes = typedArray.getResourceId(R.styleable.CalendarView_nextMonthIconRes, R.drawable.ic_chevron_right_gray);
+        int dayBackgroundColor = typedArray.getColor(R.styleable.CalendarView_dayBackgroundColor, ContextCompat.getColor(getContext(), R.color.default_day_background_color));
+        int disabledDayBackgroundColor = typedArray.getColor(R.styleable.CalendarView_disabledDayBackgroundColor, ContextCompat.getColor(getContext(), R.color.default_disabled_day_background_color));
 
         setBackgroundColor(calendarBackgroundColor);
         settingsManager.setCalendarBackgroundColor(calendarBackgroundColor);
@@ -206,6 +208,8 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
         settingsManager.setSelectionType(selectionType);
         settingsManager.setPreviousMonthIconRes(previousMonthIconRes);
         settingsManager.setNextMonthIconRes(nextMonthIconRes);
+        settingsManager.setDayBackgroundColor(dayBackgroundColor);
+        settingsManager.setDisabledDayBackgroundColor(disabledDayBackgroundColor);
     }
 
     private void handleWeekendDaysAttributes(TypedArray typedArray) {
@@ -865,6 +869,16 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     }
 
     @Override
+    public int getDayBackgroundColor() {
+        return settingsManager.getDayBackgroundColor();
+    }
+
+    @Override
+    public int getDisabledDayBackgroundColor() {
+        return settingsManager.getDisabledDayBackgroundColor();
+    }
+
+    @Override
     public void setCalendarBackgroundColor(int calendarBackgroundColor) {
         settingsManager.setCalendarBackgroundColor(calendarBackgroundColor);
         setBackgroundColor(calendarBackgroundColor);
@@ -1028,6 +1042,16 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
         } else {
             hideDaysOfWeekTitle();
         }
+    }
+
+    @Override
+    public void setDayBackgroundColor(int dayBackgroundColor) {
+        settingsManager.setDayBackgroundColor(dayBackgroundColor);
+    }
+
+    @Override
+    public void setDisabledDayBackgroundColor(int disabledDayBackgroundColor) {
+        settingsManager.setDisabledDayBackgroundColor(disabledDayBackgroundColor);
     }
 
     @Override

@@ -230,6 +230,16 @@ public class CalendarDialog extends Dialog implements View.OnClickListener,
     }
 
     @Override
+    public int getDayBackgroundColor() {
+        return calendarView.getDayBackgroundColor();
+    }
+
+    @Override
+    public int getDisabledDayBackgroundColor() {
+        return calendarView.getDisabledDayBackgroundColor();
+    }
+
+    @Override
     public void setCalendarBackgroundColor(int calendarBackgroundColor) {
         calendarView.setCalendarBackgroundColor(calendarBackgroundColor);
     }
@@ -412,6 +422,16 @@ public class CalendarDialog extends Dialog implements View.OnClickListener,
     @Override
     public void setMaxDate(Calendar maxDate) {
         calendarView.setMaxDate(maxDate);
+    }
+
+    @Override
+    public void setDayBackgroundColor(int dayBackgroundColor) {
+        calendarView.setDayBackgroundColor(dayBackgroundColor);
+    }
+
+    @Override
+    public void setDisabledDayBackgroundColor(int disabledDayBackgroundColor) {
+        calendarView.setDisabledDayBackgroundColor(disabledDayBackgroundColor);
     }
 
 }
