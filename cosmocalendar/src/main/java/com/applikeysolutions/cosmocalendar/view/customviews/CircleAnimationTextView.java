@@ -229,15 +229,13 @@ public class CircleAnimationTextView extends AppCompatTextView {
         switch (selectionState) {
 
             case START_RANGE_DAY:
-
-                return new Rect(getWidth() / 2, halfHeight - diameter/2, getWidth(), halfHeight + diameter/2);
+                //return new Rect(getWidth() / 2, halfHeight - diameter/2, getWidth(), halfHeight + diameter/2);
 
             case END_RANGE_DAY:
-
-                return new Rect(0, halfHeight - diameter/2, getWidth()/2, halfHeight + diameter/2);
+               // return new Rect(0, halfHeight - diameter/2, getWidth()/2, halfHeight + diameter/2);
 
             case RANGE_DAY:
-                return new Rect(0, halfHeight - diameter/2, getWidth(), halfHeight + diameter/2);
+                return new Rect(0, 0, getWidth(), getHeight());
 
             default:
                 return null;
