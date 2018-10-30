@@ -1149,15 +1149,15 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     @Override
     public void setMinDate(Calendar minDate) {
         settingsManager.setMinDate(minDate);
-        monthAdapter.setMinDate(minDate);
         recreateInitialMonth();
+        monthAdapter.setMinDate(minDate);
     }
 
     @Override
     public void setMaxDate(Calendar maxDate) {
         settingsManager.setMaxDate(maxDate);
-        monthAdapter.setMaxDate(maxDate);
         recreateInitialMonth();
+        monthAdapter.setMaxDate(maxDate);
     }
 
 }
