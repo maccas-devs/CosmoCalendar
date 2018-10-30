@@ -53,6 +53,7 @@ public class MonthView extends FrameLayout {
         rvDays.setLayoutParams(generateLayoutParams());
         final GridLayoutManager manager = new GridLayoutManager(getContext(), Constants.DAYS_IN_WEEK);
         rvDays.setLayoutManager(manager);
+        rvDays.getRecycledViewPool().setMaxRecycledViews(ItemViewType.MONTH_DAY, 0);
         addView(rvDays);
     }
 

@@ -100,14 +100,14 @@ public class DateUtils {
                 && day.getCalendar().getTimeInMillis() <= calendarEnd.getTimeInMillis();
     }
 
-    private static void setCalendarToStartOfDay(Calendar calendar) {
+    public static void setCalendarToStartOfDay(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
     }
 
-    private static void setCalendarToEndOfDay(Calendar calendar) {
+    public static void setCalendarToEndOfDay(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);

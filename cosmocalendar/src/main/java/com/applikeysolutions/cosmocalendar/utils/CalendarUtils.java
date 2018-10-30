@@ -3,6 +3,7 @@ package com.applikeysolutions.cosmocalendar.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.applikeysolutions.cosmocalendar.settings.SettingsManager;
@@ -97,13 +98,43 @@ public final class CalendarUtils {
         final List<Month> months = new ArrayList<>();
 
         final Calendar calendar = Calendar.getInstance();
+        DateUtils.setCalendarToStartOfDay(calendar);
+
+        Calendar firstDayOfMonthCalendar = Calendar.getInstance();
+        firstDayOfMonthCalendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        DateUtils.setCalendarToStartOfDay(firstDayOfMonthCalendar);
+
+        Calendar firstDayOfMinDateCalendar = null;
+        Calendar lastDayOfMaxDateCalendar = null;
+
+        if(settingsManager.getMinDate() != null){
+            firstDayOfMinDateCalendar = (Calendar) settingsManager.getMinDate().clone();
+            firstDayOfMinDateCalendar.set(Calendar.DAY_OF_MONTH, firstDayOfMinDateCalendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+            DateUtils.setCalendarToStartOfDay(firstDayOfMinDateCalendar);
+        }
+
+        if(settingsManager.getMaxDate() != null){
+            lastDayOfMaxDateCalendar = (Calendar) settingsManager.getMaxDate().clone();
+            lastDayOfMaxDateCalendar.set(Calendar.DAY_OF_MONTH, lastDayOfMaxDateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            DateUtils.setCalendarToStartOfDay(lastDayOfMaxDateCalendar);
+        }
+
         for (int i = 0; i < SettingsManager.DEFAULT_MONTH_COUNT / 2; i++) {
+            firstDayOfMonthCalendar.add(Calendar.MONTH, -1);
+            if(firstDayOfMinDateCalendar != null && firstDayOfMonthCalendar.compareTo(firstDayOfMinDateCalendar) < 0){
+                break;
+            }
             calendar.add(Calendar.MONTH, -1);
         }
 
         for (int i = 0; i < SettingsManager.DEFAULT_MONTH_COUNT; i++) {
             months.add(createMonth(calendar.getTime(), settingsManager));
-            DateUtils.addMonth(calendar);
+            calendar.add(Calendar.MONTH, 1);
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            if(lastDayOfMaxDateCalendar != null && calendar.compareTo(lastDayOfMaxDateCalendar) >= 0){
+                months.add(createMonth(calendar.getTime(), settingsManager));
+                break;
+            }
         }
         return months;
     }
