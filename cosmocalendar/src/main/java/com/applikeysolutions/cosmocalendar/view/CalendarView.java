@@ -17,7 +17,6 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +49,6 @@ import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.Connect
 import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.ConnectedDaysManager;
 import com.applikeysolutions.cosmocalendar.settings.selection.SelectionInterface;
 import com.applikeysolutions.cosmocalendar.utils.CalendarUtils;
-import com.applikeysolutions.cosmocalendar.utils.DateUtils;
 import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.utils.ViewIdGenerate;
 import com.applikeysolutions.cosmocalendar.utils.WeekDay;
@@ -517,29 +515,8 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
 
         if (future) {
             month = monthAdapter.getData().get(monthAdapter.getData().size() - 1);
-            if(settingsManager.getMaxDate() != null){
-                Calendar lastDayOfMaxDateCalendar = (Calendar) settingsManager.getMaxDate().clone();
-                lastDayOfMaxDateCalendar.set(Calendar.DAY_OF_MONTH, lastDayOfMaxDateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-                DateUtils.setCalendarToStartOfDay(lastDayOfMaxDateCalendar);
-
-                Calendar lastMonthMaxCalendar = (Calendar) month.getFirstDay().getCalendar().clone();
-                lastMonthMaxCalendar.set(Calendar.DAY_OF_MONTH, lastDayOfMaxDateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-                DateUtils.setCalendarToStartOfDay(lastMonthMaxCalendar);
-
-                if(lastMonthMaxCalendar.compareTo(lastDayOfMaxDateCalendar) >= 0){
-                    return;
-                }
-            }
         } else {
             month = monthAdapter.getData().get(0);
-            if(settingsManager.getMinDate() != null){
-                Calendar lastDayOfMinDateCalendar = (Calendar) settingsManager.getMinDate().clone();
-                lastDayOfMinDateCalendar.set(Calendar.DAY_OF_MONTH, lastDayOfMinDateCalendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-                DateUtils.setCalendarToStartOfDay(lastDayOfMinDateCalendar);
-                if(month.getFirstDay().getCalendar().compareTo(lastDayOfMinDateCalendar) >= 0){
-                    return;
-                }
-            }
         }
 
         asyncTask.execute(new FetchMonthsAsyncTask.FetchParams(future, month, settingsManager, monthAdapter, SettingsManager.DEFAULT_MONTH_COUNT));
@@ -667,7 +644,7 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     private void recreateInitialMonth() {
         monthAdapter.getData().clear();
         monthAdapter.getData().addAll(CalendarUtils.createInitialMonths(settingsManager));
-        lastVisibleMonthPosition = settingsManager.getMinDate() != null ? 0 : SettingsManager.DEFAULT_MONTH_COUNT / 2;
+        lastVisibleMonthPosition = SettingsManager.DEFAULT_MONTH_COUNT / 2;
     }
 
     @Override
@@ -1150,14 +1127,12 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     public void setMinDate(Calendar minDate) {
         settingsManager.setMinDate(minDate);
         monthAdapter.setMinDate(minDate);
-        recreateInitialMonth();
     }
 
     @Override
     public void setMaxDate(Calendar maxDate) {
         settingsManager.setMaxDate(maxDate);
         monthAdapter.setMaxDate(maxDate);
-        recreateInitialMonth();
     }
 
 }
