@@ -119,20 +119,20 @@ public final class CalendarUtils {
             DateUtils.setCalendarToStartOfDay(lastDayOfMaxDateCalendar);
         }
 
-        if(firstDayOfMinDateCalendar != null){
-                calendar.setTime(firstDayOfMinDateCalendar.getTime());
-        }else {
-            for (int i = 0; i < SettingsManager.DEFAULT_MONTH_COUNT / 2; i++) {
-                calendar.add(Calendar.MONTH, -1);
+        for (int i = 0; i < SettingsManager.DEFAULT_MONTH_COUNT / 2; i++) {
+            firstDayOfMonthCalendar.add(Calendar.MONTH, -1);
+            if(firstDayOfMinDateCalendar != null && firstDayOfMonthCalendar.compareTo(firstDayOfMinDateCalendar) < 0){
+                break;
             }
+            calendar.add(Calendar.MONTH, -1);
         }
-
 
         for (int i = 0; i < SettingsManager.DEFAULT_MONTH_COUNT; i++) {
             months.add(createMonth(calendar.getTime(), settingsManager));
             calendar.add(Calendar.MONTH, 1);
             calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-            if(lastDayOfMaxDateCalendar != null && calendar.compareTo(lastDayOfMaxDateCalendar) > 0){
+            if(lastDayOfMaxDateCalendar != null && calendar.compareTo(lastDayOfMaxDateCalendar) >= 0){
+                months.add(createMonth(calendar.getTime(), settingsManager));
                 break;
             }
         }

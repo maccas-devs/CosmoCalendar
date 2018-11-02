@@ -668,14 +668,6 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
         monthAdapter.getData().clear();
         monthAdapter.getData().addAll(CalendarUtils.createInitialMonths(settingsManager));
         lastVisibleMonthPosition = settingsManager.getMinDate() != null ? 0 : SettingsManager.DEFAULT_MONTH_COUNT / 2;
-
-        if(settingsManager.getMinDate() != null){
-            monthAdapter.setMinDate(settingsManager.getMinDate());
-        }
-
-        if(settingsManager.getMaxDate() != null){
-            monthAdapter.setMaxDate(settingsManager.getMaxDate());
-        }
     }
 
     @Override
@@ -1158,12 +1150,14 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     public void setMinDate(Calendar minDate) {
         settingsManager.setMinDate(minDate);
         recreateInitialMonth();
+        monthAdapter.setMinDate(minDate);
     }
 
     @Override
     public void setMaxDate(Calendar maxDate) {
         settingsManager.setMaxDate(maxDate);
         recreateInitialMonth();
+        monthAdapter.setMaxDate(maxDate);
     }
 
 }
