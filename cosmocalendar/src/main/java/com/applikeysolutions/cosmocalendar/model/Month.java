@@ -1,5 +1,7 @@
 package com.applikeysolutions.cosmocalendar.model;
 
+import com.applikeysolutions.cosmocalendar.utils.DateUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,6 +24,12 @@ public class Month {
 
     public void setFirstDay(Day firstDay) {
         this.firstDay = firstDay;
+    }
+
+    public Calendar getLastDayCalendar(){
+        Calendar monthLastDay = Calendar.getInstance();
+        monthLastDay.setTime(DateUtils.getLastDayOfMonth(((Calendar) firstDay.getCalendar().clone()).getTime()));
+        return monthLastDay;
     }
 
     public List<Day> getDays() {

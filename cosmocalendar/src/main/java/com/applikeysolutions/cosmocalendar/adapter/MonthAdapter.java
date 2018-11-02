@@ -1,6 +1,7 @@
 package com.applikeysolutions.cosmocalendar.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.applikeysolutions.cosmocalendar.adapter.viewholder.MonthHolder;
@@ -9,6 +10,7 @@ import com.applikeysolutions.cosmocalendar.model.Month;
 import com.applikeysolutions.cosmocalendar.selection.BaseSelectionManager;
 import com.applikeysolutions.cosmocalendar.settings.lists.DisabledDaysCriteria;
 import com.applikeysolutions.cosmocalendar.utils.CalendarUtils;
+import com.applikeysolutions.cosmocalendar.utils.DateUtils;
 import com.applikeysolutions.cosmocalendar.utils.DayFlag;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.applikeysolutions.cosmocalendar.view.ItemViewType;
@@ -18,6 +20,7 @@ import com.applikeysolutions.cosmocalendar.view.delegate.MonthDelegate;
 import com.applikeysolutions.cosmocalendar.view.delegate.OtherDayDelegate;
 
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -177,7 +180,17 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
     }
 
     public void setMinDate(Calendar minDate) {
-        for (Month month : months) {
+        Calendar minDateFirstDayOfMonth = Calendar.getInstance();
+        minDateFirstDayOfMonth.setTime(DateUtils.getFirstDayOfMonth(((Calendar) minDate.clone()).getTime()));
+
+        Iterator<Month> monthIterator = months.iterator();
+        while (monthIterator.hasNext()){
+            Month month = monthIterator.next();
+            if(month.getFirstDay().getCalendar().compareTo(minDateFirstDayOfMonth) < 0){
+                monthIterator.remove();
+                continue;
+            }
+
             for (Day day : month.getDays()) {
                 if (!day.isDisabled()) {
                     day.setDisabled(CalendarUtils.isDayDisabledByMinDate(day, minDate));
@@ -188,7 +201,18 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
     }
 
     public void setMaxDate(Calendar maxDate) {
-        for (Month month : months) {
+        Calendar maxDateLastDayOfMonth = Calendar.getInstance();
+        maxDateLastDayOfMonth.setTime(DateUtils.getLastDayOfMonth(((Calendar) maxDate.clone()).getTime()));
+
+        Iterator<Month> monthIterator = months.iterator();
+        while (monthIterator.hasNext()) {
+            Month month = monthIterator.next();
+
+            if(month.getLastDayCalendar().compareTo(maxDateLastDayOfMonth) > 0){
+                monthIterator.remove();
+                continue;
+            }
+
             for (Day day : month.getDays()) {
                 if (!day.isDisabled()) {
                     day.setDisabled(CalendarUtils.isDayDisabledByMaxDate(day, maxDate));
