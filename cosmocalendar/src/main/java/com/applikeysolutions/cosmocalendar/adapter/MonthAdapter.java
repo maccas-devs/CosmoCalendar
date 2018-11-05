@@ -180,6 +180,10 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
     }
 
     public void setMinDate(Calendar minDate) {
+        setMinDate(minDate, false);
+    }
+
+    public void setMinDate(Calendar minDate, boolean limitCalendarToMinDate) {
         Calendar minDateFirstDayOfMonth = Calendar.getInstance();
         minDateFirstDayOfMonth.setTime(DateUtils.getFirstDayOfMonth(((Calendar) minDate.clone()).getTime()));
 
@@ -187,7 +191,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         while (monthIterator.hasNext()){
             Month month = monthIterator.next();
 
-            if(month.isBefore(minDateFirstDayOfMonth)){
+            if(limitCalendarToMinDate && month.isBefore(minDateFirstDayOfMonth)){
                 monthIterator.remove();
                 continue;
             }
@@ -202,6 +206,10 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
     }
 
     public void setMaxDate(Calendar maxDate) {
+        setMaxDate(maxDate, false);
+    }
+
+    public void setMaxDate(Calendar maxDate, boolean limitCalendarToMaxDate) {
         Calendar maxDateLastDayOfMonth = Calendar.getInstance();
         maxDateLastDayOfMonth.setTime(DateUtils.getLastDayOfMonth(((Calendar) maxDate.clone()).getTime()));
 
@@ -209,7 +217,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         while (monthIterator.hasNext()) {
             Month month = monthIterator.next();
 
-            if(month.isAfter(maxDateLastDayOfMonth)){
+            if(limitCalendarToMaxDate && month.isAfter(maxDateLastDayOfMonth)){
                 monthIterator.remove();
                 continue;
             }
