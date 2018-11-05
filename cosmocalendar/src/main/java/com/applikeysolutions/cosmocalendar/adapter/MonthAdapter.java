@@ -186,7 +186,8 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         Iterator<Month> monthIterator = months.iterator();
         while (monthIterator.hasNext()){
             Month month = monthIterator.next();
-            if(month.getFirstDay().getCalendar().compareTo(minDateFirstDayOfMonth) < 0){
+
+            if(month.isBefore(minDateFirstDayOfMonth)){
                 monthIterator.remove();
                 continue;
             }
@@ -208,7 +209,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         while (monthIterator.hasNext()) {
             Month month = monthIterator.next();
 
-            if(month.getLastDayCalendar().compareTo(maxDateLastDayOfMonth) > 0){
+            if(month.isAfter(maxDateLastDayOfMonth)){
                 monthIterator.remove();
                 continue;
             }

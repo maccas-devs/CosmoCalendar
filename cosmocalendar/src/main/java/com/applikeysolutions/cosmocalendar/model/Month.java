@@ -32,6 +32,18 @@ public class Month {
         return monthLastDay;
     }
 
+    public boolean isBefore(Calendar calendar){
+        Calendar firstDayCalendar = this.getFirstDay().getCalendar();
+        return calendar.get(Calendar.YEAR) > firstDayCalendar.get(Calendar.YEAR)
+                || (calendar.get(Calendar.YEAR) == firstDayCalendar.get(Calendar.YEAR) &&  (calendar.get(Calendar.DAY_OF_YEAR) > firstDayCalendar.get(Calendar.DAY_OF_YEAR)));
+    }
+
+    public boolean isAfter(Calendar calendar){
+        Calendar lastDayCalendar = this.getLastDayCalendar();
+        return calendar.get(Calendar.YEAR) < lastDayCalendar.get(Calendar.YEAR)
+                || (calendar.get(Calendar.YEAR) == lastDayCalendar.get(Calendar.YEAR) &&  (calendar.get(Calendar.DAY_OF_YEAR) < lastDayCalendar.get(Calendar.DAY_OF_YEAR)));
+    }
+
     public List<Day> getDays() {
         return days;
     }
