@@ -89,6 +89,27 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         return months;
     }
 
+    public void disableDay(Calendar dayToDisableCalendar, boolean disable) {
+
+        monthsLoop:
+        for (Month month : months) {
+
+            Calendar monthFirstDayCalendar = month.getFirstDay().getCalendar();
+
+            if (monthFirstDayCalendar.get(Calendar.YEAR) == dayToDisableCalendar.get(Calendar.YEAR)
+                    && monthFirstDayCalendar.get(Calendar.MONTH) == dayToDisableCalendar.get(Calendar.MONTH)) {
+                for (Day monthDay : month.getDays()) {
+                    if (monthDay.getCalendar().get(Calendar.DAY_OF_MONTH) == dayToDisableCalendar.get(Calendar.DAY_OF_MONTH)) {
+                        monthDay.setDisabled(disable);
+                        break monthsLoop;
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
     public static class MonthAdapterBuilder {
 
         private List<Month> months;
