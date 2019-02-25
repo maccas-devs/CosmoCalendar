@@ -101,13 +101,12 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
                 for (Day monthDay : month.getDays()) {
                     if (monthDay.getCalendar().get(Calendar.DAY_OF_MONTH) == dayToDisableCalendar.get(Calendar.DAY_OF_MONTH)) {
                         monthDay.setDisabled(disable);
+                        notifyItemChanged(months.indexOf(month));
                         break monthsLoop;
                     }
                 }
             }
         }
-
-        notifyDataSetChanged();
     }
 
     public static class MonthAdapterBuilder {
