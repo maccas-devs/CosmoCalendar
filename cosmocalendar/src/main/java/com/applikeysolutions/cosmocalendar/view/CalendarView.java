@@ -1144,6 +1144,15 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     }
 
     public void disableDay(Calendar calendar, boolean disable){
+
+        if(calendar.before(settingsManager.getMinDate())){
+            settingsManager.setMinDate(calendar);
+        }
+
+        if(calendar.after(settingsManager.getMaxDate())){
+            settingsManager.setMaxDate(calendar);
+        }
+
         monthAdapter.disableDay(calendar, disable);
     }
 
