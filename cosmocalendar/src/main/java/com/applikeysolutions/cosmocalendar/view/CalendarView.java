@@ -1143,7 +1143,7 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
         monthAdapter.setMaxDate(maxDate, limitCalendarToMaxDate);
     }
 
-    public void disableDay(Calendar calendar, boolean disable){
+    public void disableDay(Calendar calendar, boolean disable, boolean belongToMonth){
 
         if(calendar.before(settingsManager.getMinDate())){
             settingsManager.setMinDate(calendar);
@@ -1153,7 +1153,7 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
             settingsManager.setMaxDate(calendar);
         }
 
-        monthAdapter.disableDay(calendar, disable);
+        monthAdapter.disableDay(calendar, disable, belongToMonth);
     }
 
 }

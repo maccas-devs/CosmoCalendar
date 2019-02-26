@@ -89,7 +89,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         return months;
     }
 
-    public void disableDay(Calendar dayToDisableCalendar, boolean disable) {
+    public void disableDay(Calendar dayToDisableCalendar, boolean disable, boolean belongToMonth) {
 
         monthsLoop:
         for (Month month : months) {
@@ -99,7 +99,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
             if (monthFirstDayCalendar.get(Calendar.YEAR) == dayToDisableCalendar.get(Calendar.YEAR)
                     && monthFirstDayCalendar.get(Calendar.MONTH) == dayToDisableCalendar.get(Calendar.MONTH)) {
                 for (Day monthDay : month.getDays()) {
-                    if (monthDay.getCalendar().get(Calendar.DAY_OF_MONTH) == dayToDisableCalendar.get(Calendar.DAY_OF_MONTH)) {
+                    if (monthDay.isBelongToMonth() == belongToMonth && monthDay.getCalendar().get(Calendar.YEAR) == dayToDisableCalendar.get(Calendar.YEAR) && monthDay.getCalendar().get(Calendar.DAY_OF_YEAR) == dayToDisableCalendar.get(Calendar.DAY_OF_YEAR)) {
                         monthDay.setDisabled(disable);
                         notifyItemChanged(months.indexOf(month));
                         break monthsLoop;
