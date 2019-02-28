@@ -157,16 +157,6 @@ public final class CalendarUtils {
             day.setWeekend(settingsManager.getWeekendDays().contains(day.getCalendar().get(Calendar.DAY_OF_WEEK)));
         }
 
-        if (settingsManager.getMinDate() != null) {
-            day.setDisabled(isDayDisabledByMinDate(day, settingsManager.getMinDate()));
-        }
-
-        if (settingsManager.getMaxDate() != null) {
-            if (!day.isDisabled()) {
-                day.setDisabled(isDayDisabledByMaxDate(day, settingsManager.getMaxDate()));
-            }
-        }
-
         if (settingsManager.getDisabledDays() != null) {
             day.setDisabled(isDayInSet(day, settingsManager.getDisabledDays()));
             if (!day.isDisabled()) {
@@ -182,6 +172,16 @@ public final class CalendarUtils {
 
         if (settingsManager.getConnectedDaysManager().isAnyConnectedDays()) {
             settingsManager.getConnectedDaysManager().applySettingsToDay(day);
+        }
+
+        if (settingsManager.getMinDate() != null) {
+            day.setDisabled(isDayDisabledByMinDate(day, settingsManager.getMinDate()));
+        }
+
+        if (settingsManager.getMaxDate() != null) {
+            if (!day.isDisabled()) {
+                day.setDisabled(isDayDisabledByMaxDate(day, settingsManager.getMaxDate()));
+            }
         }
     }
 
