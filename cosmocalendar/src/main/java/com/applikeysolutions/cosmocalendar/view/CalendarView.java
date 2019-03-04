@@ -1129,7 +1129,19 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     }
 
     public void setMinDate(Calendar minDate, boolean limitCalendarToMinDate) {
+
         settingsManager.setMinDate(minDate);
+
+        List<Month> months = monthAdapter.getData();
+        if(months != null && !months.isEmpty()){
+            Month minMonth = months.get(0);
+            Calendar minMonthFirstDay = minMonth.getFirstDay().getCalendar();
+            if(minMonthFirstDay.after(minDate)){
+                loadAsyncMonths(false);
+                return;
+            }
+        }
+
         monthAdapter.setMinDate(minDate, limitCalendarToMinDate);
     }
 
@@ -1139,7 +1151,19 @@ public class CalendarView extends RelativeLayout implements OnDaySelectedListene
     }
     
     public void setMaxDate(Calendar maxDate, boolean limitCalendarToMaxDate) {
+
         settingsManager.setMaxDate(maxDate);
+
+        List<Month> months = monthAdapter.getData();
+        if(months != null && !months.isEmpty()){
+            Month maxMonth = months.get(months.size() -1);
+            Calendar maxMonthLastDay = maxMonth.getLastDayCalendar();
+            if(maxMonthLastDay.before(maxDate)){
+                loadAsyncMonths(true);
+                return;
+            }
+        }
+
         monthAdapter.setMaxDate(maxDate, limitCalendarToMaxDate);
     }
 
