@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.applikeysolutions.cosmocalendar.adapter.MonthAdapter;
+import com.applikeysolutions.cosmocalendar.model.Day;
 import com.applikeysolutions.cosmocalendar.model.Month;
 import com.applikeysolutions.cosmocalendar.settings.SettingsManager;
 import com.applikeysolutions.cosmocalendar.utils.CalendarUtils;
@@ -55,12 +56,12 @@ public class FetchMonthsAsyncTask extends AsyncTask<FetchMonthsAsyncTask.FetchPa
             calendar.add(Calendar.MONTH, future ? 1 : -1);
             Month newMonth = CalendarUtils.createMonth(calendar.getTime(), settingsManager);
             if (future) {
-                if(maxDateLastDayOfMonth != null &&  newMonth.getLastDayCalendar().compareTo(maxDateLastDayOfMonth) > 0){
+                if(maxDateLastDayOfMonth != null &&  CalendarUtils.isDayDisabledByMaxDate(new Day(newMonth.getLastDayCalendar()), maxDateLastDayOfMonth)){
                     break;
                 }
                 result.add(newMonth);
             } else {
-                if(minDateFirstDayOfMonth != null &&  newMonth.getFirstDay().getCalendar().compareTo(minDateFirstDayOfMonth) < 0){
+                if(minDateFirstDayOfMonth != null &&  CalendarUtils.isDayDisabledByMinDate(newMonth.getFirstDay(), minDateFirstDayOfMonth)){
                     break;
                 }
                 result.add(0, newMonth);
